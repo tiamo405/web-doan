@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Violations</title>
+    <style>
+        /* Styles here */
+    </style>
+</head>
+<body>
+
+<div class="violation-container">
+    <h1>Danh sách Lỗi Vi phạm</h1>
+    
+    <!-- Date Picker -->
+    <label for="dateInput">Chọn ngày:</label>
+    <input type="date" id="dateInput">
+    <button onclick="fetchViolations()">Xem vi phạm</button>
+
+    <table id="violationTable">
+        <thead>
+            <tr>
+                <th>Violation ID</th>
+                <th>Camera ID</th>
+                <th>Timestamp</th>
+                <th>Violation Date</th>
+                <th>Location</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody id="violationList">
+            <!-- Violation data will appear here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Function to get query parameter values from the URL
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Convert selected date to GMT+7 and fetch violations
+    // Convert selected date to GMT+7 and fetch violations
+    async function fetchViolations() {
+    const rtspUrl = getQueryParam('rtsp_url');
+    const dateInput = document.getElementById('dateInput').value;
+
+    if (!dateInput) {
+        alert("Vui lòng chọn ngày!");
+        return;
+    }
+
+    // Tạo thời gian 00:00:00 theo GMT+7
+    const selectedDate = new Date(dateInput);
+    selectedDate.setHours(0, 0, 0, 0); // Đặt thời gian về 00:00:00 giờ địa phương
+    const timestampGMT7 = Math.floor((selectedDate.getTime()) / 1000); // Chuyển thành timestamp GMT+7
+
+    const apiUrl = `http://192.168.5.106:5005/prod/api/v1/view/get_history?rtsp_url=${encodeURIComponent(rtspUrl)}&date=${timestampGMT7}&page=1&limit=3`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.entities && data.entities.violations) {
+            displayViolations(data.entities.violations);
+        } else {
+            document.getElementById('violationList').innerHTML = '<tr><td colspan="6">Không có lỗi vi phạm nào được tìm thấy.</td></tr>';
+        }
+    } catch (error) {
+        console.error("Error fetching violations:", error);
+        document.getElementById('violationList').innerHTML = '<tr><td colspan="6">Lỗi khi tải danh sách vi phạm.</td></tr>';
+    }
+}
+
+
+
+    // Display violations in the table
+    function displayViolations(violations) {
+        const violationList = document.getElementById('violationList');
+        violationList.innerHTML = '';
+
+        violations.forEach(violation => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${violation._id}</td>
+                <td>${violation.camera_id}</td>
+                <td>${new Date(violation.detect_timestamp * 1000).toLocaleString()}</td>
+                <td>${new Date(violation.violation_date * 1000).toLocaleDateString()}</td>
+                <td>${violation.location}</td>
+                <td><img src="${violation.url_image}" alt="Violation Image" width="100" height="100"></td>
+            `;
+            violationList.appendChild(row);
+        });
+    }
+</script>
+
+</body>
+</html>
