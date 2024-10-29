@@ -5,15 +5,14 @@ import { BASE_URL_BACKENT } from "../utils/api";
 export const configAxios = axios.create({
   baseURL: BASE_URL_BACKENT,
   headers: {
-    // 'Content-Type': 'application/json', #chỉ dùng khi gửi dữ liệu dạng json, nếu formData thì không cần
-    // 'Access-Control-Allow-Origin': '*',
-    // Authorization: `Bearer ${accessToken}`
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "ngrok-skip-browser-warning": "true",
   },
 });
-
 configAxios.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -23,7 +22,6 @@ configAxios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
 
 // configAxios.interceptors.response.use(
 //   function (response) {
