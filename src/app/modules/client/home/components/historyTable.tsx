@@ -28,37 +28,39 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
 }) => {
   const columCamera: ColumnsType<ReportCameraHistory> = [
     {
-      title: "_id",
+      title: "Index",
       align: "center",
-      dataIndex: "",
+      render: (_value, _record, index) => {
+        return (isPageHistory - 1) * 5 + index + 1;
+      },
     },
+    // {
+    //   title: "Camera ID",
+    //   align: "center",
+    //   dataIndex: "camera_id",
+    // },
     {
-      title: "camera_id",
-      align: "center",
-      dataIndex: "camera_id",
-    },
-    {
-      title: "detect_timestamp",
+      title: "Detect timestamp",
       align: "center",
       dataIndex: "detect_timestamp",
       render: (text) => (
         <span>
-          {dayjs(text).format("DD/MM/YYYY")} {/* Định dạng ngày */}
+          {dayjs(text).format("HH:mm:ss - DD/MM/YYYY")} {/* Định dạng ngày */}
         </span>
       ),
     },
+    // {
+    //   title: "Violation date",
+    //   align: "center",
+    //   dataIndex: "violation_date",
+    //   render: (text) => (
+    //     <span>
+    //       {dayjs(text).format("DD/MM/YYYY")} {/* Định dạng ngày */}
+    //     </span>
+    //   ),
+    // },
     {
-      title: "violation_date",
-      align: "center",
-      dataIndex: "violation_date",
-      render: (text) => (
-        <span>
-          {dayjs(text).format("DD/MM/YYYY")} {/* Định dạng ngày */}
-        </span>
-      ),
-    },
-    {
-      title: "url_image",
+      title: "Image",
       align: "center",
       dataIndex: "url_image",
       render: (text) => (
@@ -70,7 +72,7 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
       ),
     },
     {
-      title: "location",
+      title: "Location",
       align: "center",
       dataIndex: "location",
     },

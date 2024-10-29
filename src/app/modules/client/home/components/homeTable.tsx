@@ -35,9 +35,11 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
   };
   const columCamera: ColumnsType<ReportCameraHistory> = [
     {
-      title: "_id",
+      title: "Index",
       align: "center",
-      dataIndex: "",
+      render: (_value, _record, index) => {
+        return (isPage - 1) * 10 + index + 1;
+      },
     },
     {
       title: "Rtsp Camera",
