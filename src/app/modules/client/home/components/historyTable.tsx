@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { Button, Col, Pagination, Row, Spin } from "antd";
+import { Button, Col, Pagination, Row, Spin, Tag } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 interface listCameraHistoryProps {
@@ -49,16 +49,18 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
         </span>
       ),
     },
-    // {
-    //   title: "Violation date",
-    //   align: "center",
-    //   dataIndex: "violation_date",
-    //   render: (text) => (
-    //     <span>
-    //       {dayjs(text).format("DD/MM/YYYY")} {/* Định dạng ngày */}
-    //     </span>
-    //   ),
-    // },
+    {
+      title: "Is violation",
+      align: "center",
+      dataIndex: "is_violation",
+      render: (text) => {
+        return (
+          <Tag color={text === "True" ? "green" : text === "False" ? "red" : "blue"}>
+            {text === "True" ? "True" : text === "False" ? "False" : "Unknown"}
+          </Tag>
+        );
+      },
+    },
     {
       title: "Image",
       align: "center",
