@@ -1,20 +1,31 @@
-import { Button, Col, DatePicker, Modal, Row, Spin } from "antd";
+import { Button, Col, DatePicker, Row } from "antd";
 import { ListCameraTable } from "./components/homeTable";
-import { useGetCamera, useGetCameraHistory } from "./home.loader";
+import {
+  useGetCamera,
+  useGetCameraHistory,
+  useGetVideoViolation,
+  useSetViolation,
+} from "./home.loader";
 import "./home.css";
 import { useState } from "react";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { ListCameraHistoryTable } from "./components/historyTable";
+import { ListVideoViolationTable } from "./components/videoViolation";
 const Home = () => {
   const currentDate = dayjs();
   const timestampCurrentDate = currentDate.unix();
   const [isPage, setIsPage] = useState(1);
   const [isPageHistory, setIsPageHistory] = useState(1);
+  const [isPageVideoViolation, setIsPageVideoViolation] = useState(1);
   const [isRtsp, setIsRtsp] = useState("");
   const [isDate, setIsDate] = useState(timestampCurrentDate);
   const [showFirstTable, setShowFirstTable] = useState(true);
+  const [isIdImage, setIsIdImage] = useState("");
+  const [dataUseSetViolation, setDataSetViolation] = useState("");
+  const [showFirstTableVideoViolation, setShowFirstTableVideoViolation] =
+    useState(true);
   const { data: dataCamera, isLoading: isLoadingCamera } = useGetCamera({
     page: isPage,
     limit: 10,
@@ -26,6 +37,14 @@ const Home = () => {
       page: isPageHistory,
       limit: 5,
     });
+  const { data: dataVideoViolation, isLoading: isLoadingVideoViolation } =
+    useGetVideoViolation({
+      id_image_violation: isIdImage,
+      page: isPageVideoViolation,
+      limit: 10,
+    });
+  const { mutate: mutateSetViolation, isLoading: isLoadingSetViolation } =
+    useSetViolation();
   dayjs.extend(utc);
   dayjs.extend(timezone);
   const onChangeDate = (date: any) => {
@@ -40,7 +59,11 @@ const Home = () => {
           <Row justify={"space-between"}>
             <Col>
               <span className="titleCamera">
-                {showFirstTable ? "CAMERA" : "CAMERA HISTORY"}
+                {showFirstTable
+                  ? "CAMERA"
+                  : showFirstTableVideoViolation
+                  ? "CAMERA HISTORY"
+                  : "VIOLATION VIDEOS"}
               </span>{" "}
             </Col>
             <Col>
@@ -78,15 +101,36 @@ const Home = () => {
                       setIsPage={setIsPage}
                       setShowFirstTable={setShowFirstTable}
                     />
-                  ) : (
+                  ) : showFirstTableVideoViolation ? (
                     <ListCameraHistoryTable
                       data={dataCameraHistory?.entities?.violations}
                       isLoading={isLoadingCameraHistory}
                       setShowFirstTable={setShowFirstTable}
                       setIsPageHistory={setIsPageHistory}
                       isPageHistory={isPageHistory}
-                      rtspUrl = {dataCameraHistory?.entities?.rtsp_url}
+                      rtspUrl={dataCameraHistory?.entities?.rtsp_url}
                       totalPageHistory={dataCameraHistory?.entities?.totalPage}
+                      setShowFirstTableVideoViolation={
+                        setShowFirstTableVideoViolation
+                      }
+                      setIsIdImage={setIsIdImage}
+                      setDataSetViolation={setDataSetViolation}
+                    />
+                  ) : (
+                    <ListVideoViolationTable
+                      data={dataVideoViolation?.entities?.videos}
+                      isLoading={isLoadingVideoViolation}
+                      setShowFirstTableVideoViolation={
+                        setShowFirstTableVideoViolation
+                      }
+                      mutateSetViolation={mutateSetViolation}
+                      isLoadingSetViolation={isLoadingSetViolation}
+                      setIsPageVideoViolation={setIsPageVideoViolation}
+                      isPageVideoViolation={isPageVideoViolation}
+                      totalPageVideoViolation={
+                        dataVideoViolation?.entities?.totalPage
+                      }
+                      dataUseSetViolation={dataUseSetViolation}
                     />
                   )}
                 </>
@@ -95,22 +139,6 @@ const Home = () => {
           </Row>
         </Col>
       </Row>
-      {/* Modal loading */}
-      <Modal
-        // open={isLoadingCamera}
-        footer={false}
-        closable={false}
-        centered={true}
-      >
-        <Col span={24}>
-          <Row justify={"center"}>
-            <h1></h1>
-          </Row>
-          <Row justify={"center"}>
-            <Spin />
-          </Row>
-        </Col>
-      </Modal>
     </>
   );
 };

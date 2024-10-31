@@ -10,6 +10,9 @@ interface listCameraHistoryProps {
   totalPageHistory: any;
   isPageHistory: any;
   rtspUrl: any;
+  setShowFirstTableVideoViolation: any;
+  setIsIdImage: any;
+  setDataSetViolation: any;
 }
 
 interface ReportCameraHistory {
@@ -25,6 +28,9 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
   totalPageHistory,
   isPageHistory,
   rtspUrl,
+  setShowFirstTableVideoViolation,
+  setIsIdImage,
+  setDataSetViolation,
 }) => {
   const columCamera: ColumnsType<ReportCameraHistory> = [
     {
@@ -55,9 +61,7 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
       dataIndex: "is_violation",
       render: (text) => {
         return (
-          <Tag color={text === "True" ? "green" : text === "False" ? "red" : "blue"}>
-            {text === "True" ? "True" : text === "False" ? "False" : "Unknown"}
-          </Tag>
+          <Tag color={text ? "green" : "red"}>{text ? "true" : "false"}</Tag>
         );
       },
     },
@@ -85,6 +89,11 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
   const changePage = (page: any) => {
     setIsPageHistory(page);
   };
+  const handleVideoViolation = (value: any) => {
+    setIsIdImage(value?._id);
+    setDataSetViolation(value);
+    setShowFirstTableVideoViolation(false);
+  };
   return (
     <>
       <Col span={24}>
@@ -110,6 +119,13 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
               columns={columCamera}
               dataSource={data ?? []}
               pagination={false}
+              onRow={(record) => {
+                return {
+                  onClick: () => {
+                    handleVideoViolation(record);
+                  },
+                };
+              }}
             />
           </>
         )}
