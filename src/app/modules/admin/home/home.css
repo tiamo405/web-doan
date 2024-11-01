@@ -4,17 +4,33 @@
 }
 .edit-button {
   color: #1677ff;
-  font-size: 16px;
+  font-size: 20px;
   margin-right: 10px;
   cursor: pointer;
 }
 .delete-button {
   color: red;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
 }
 .add-button {
   color: green;
   font-size: 26px;
   cursor: pointer;
+}
+.history-button {
+  color: green;
+  font-size:20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.edit-button:hover{
+  color: gray;
+}
+.delete-button:hover{
+  color: gray;
+}
+.history-button:hover{
+  color: gray;
 }

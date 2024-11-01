@@ -1,5 +1,9 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Col, Pagination, Row, Spin, Tag } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  HistoryOutlined,
+} from "@ant-design/icons";
+import { Col, Image, Pagination, Row, Spin, Tag } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 interface listCameraProps {
@@ -79,7 +83,7 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
       align: "center",
       dataIndex: "origin_image",
       render: (text) => (
-        <img
+        <Image
           src={text}
           alt="Origin"
           style={{ width: 100, height: 100, objectFit: "cover" }}
@@ -92,6 +96,10 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
       render: (_, data: any) => {
         return (
           <>
+            <HistoryOutlined
+              className="history-button"
+              onClick={() => handleRtsp(data)}
+            />
             <EditOutlined
               className="edit-button"
               onClick={() => handleEdit(data)}
@@ -124,13 +132,6 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
               columns={columCamera}
               dataSource={data ?? []}
               pagination={false}
-              onRow={(record) => {
-                return {
-                  onClick: () => {
-                    handleRtsp(record);
-                  },
-                };
-              }}
             />
             <Row justify={"end"} style={{ marginTop: "20px" }}>
               <Pagination

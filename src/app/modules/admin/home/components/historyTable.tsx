@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { Button, Col, Pagination, Row, Spin, Tag } from "antd";
+import { Button, Col, Image, Pagination, Row, Spin, Tag } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 interface listCameraHistoryProps {
@@ -70,7 +70,7 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
       align: "center",
       dataIndex: "url_image",
       render: (text) => (
-        <img
+        <Image
           src={text}
           alt="Origin"
           style={{ width: 100, height: 100, objectFit: "cover" }}
@@ -81,6 +81,16 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
       title: "Location",
       align: "center",
       dataIndex: "location",
+    },
+    {
+      title: "Action",
+      align: "center",
+
+      render: (_, record) => (
+        <Button type="primary" onClick={() => handleVideoViolation(record)}>
+          Video inspection
+        </Button>
+      ),
     },
   ];
   const handleBack = () => {
@@ -119,13 +129,6 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
               columns={columCamera}
               dataSource={data ?? []}
               pagination={false}
-              onRow={(record) => {
-                return {
-                  onClick: () => {
-                    handleVideoViolation(record);
-                  },
-                };
-              }}
             />
           </>
         )}

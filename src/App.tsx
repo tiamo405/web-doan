@@ -2,7 +2,7 @@
 import DefaultHome from './app/container/default-home/default-home.component'
 import DefaultLayout from './app/container/default-layout/default-layout.component'
 import { useRoutes } from 'react-router-dom'
-import { clientRouter } from './app/modules/admin/client.router'
+import { clientRouter } from './app/modules/admin/admin.router'
 
 function App() {
   let element: any = useRoutes([

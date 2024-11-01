@@ -14,13 +14,16 @@ import timezone from "dayjs/plugin/timezone";
 import { ListCameraHistoryTable } from "./components/historyTable";
 import { ListVideoViolationTable } from "./components/videoViolation";
 const Home = () => {
-  const currentDate = dayjs();
-  const timestampCurrentDate = currentDate.unix();
+  const currentTime = dayjs();
+  const formattedDate = currentTime.format("DD/MM/YYYY");
+  const timestampCurrentDate = dayjs(formattedDate, "DD/MM/YYYY").unix();
   const [isPage, setIsPage] = useState(1);
   const [isPageHistory, setIsPageHistory] = useState(1);
   const [isPageVideoViolation, setIsPageVideoViolation] = useState(1);
   const [isRtsp, setIsRtsp] = useState("");
   const [isDate, setIsDate] = useState(timestampCurrentDate);
+  console.log(isDate);
+  
   const [showFirstTable, setShowFirstTable] = useState(true);
   const [isIdImage, setIsIdImage] = useState("");
   const [dataUseSetViolation, setDataSetViolation] = useState("");
@@ -54,7 +57,7 @@ const Home = () => {
   };
   return (
     <>
-      <Row style={{ padding: "50px" }}>
+      <Row style={{ padding: "20px" }}>
         <Col span={24} xxl={24} xl={24}>
           <Row justify={"space-between"}>
             <Col>
@@ -72,7 +75,7 @@ const Home = () => {
                   <DatePicker
                     onChange={onChangeDate}
                     needConfirm
-                    defaultValue={currentDate}
+                    defaultValue={currentTime}
                   />
                 </Col>
                 <Col>
@@ -89,7 +92,7 @@ const Home = () => {
             gutter={[0, 30]}
           >
             <Col xl={24} xs={24} style={{ backgroundColor: "#fff" }}>
-              <Row justify={"space-between"} gutter={[0, 40]}>
+              <Row justify={"space-between"} gutter={[0, 40]} style={{padding:"20px"}}>
                 <>
                   {showFirstTable ? (
                     <ListCameraTable

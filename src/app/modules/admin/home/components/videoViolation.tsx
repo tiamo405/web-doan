@@ -131,6 +131,8 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
       <Col span={24}>
         <Row justify="end" align="middle" style={{ marginBottom: "20px" }}>
           <Switch
+            checkedChildren="True"
+            unCheckedChildren="False"
             style={{ margin: "10px" }}
             checked={isViolation}
             onChange={(checkedClick) => showConfirmModal(checkedClick)}
