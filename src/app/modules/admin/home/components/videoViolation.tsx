@@ -4,6 +4,8 @@ import Table, { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 interface listVideoViolationProps {
   data: any;
   isLoading: any;
@@ -32,6 +34,8 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
   isLoadingSetViolation,
   dataUseSetViolation,
 }) => {
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
   const columVideoViolation: ColumnsType<ReportVideoViolation> = [
     {
       title: "Index",
@@ -59,13 +63,21 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
       title: "Start time",
       align: "center",
       dataIndex: "start_time",
-      render: (text) => <span>{dayjs(text).format("HH:mm:ss")}</span>,
+      render: (text) => (
+        <span>
+          {dayjs.unix(text).tz("Asia/Ho_Chi_Minh").format("HH:mm:ss")}
+        </span>
+      ),
     },
     {
       title: "End time",
       align: "center",
       dataIndex: "end_time",
-      render: (text) => <span>{dayjs(text).format("HH:mm:ss")}</span>,
+      render: (text) => (
+        <span>
+          {dayjs.unix(text).tz("Asia/Ho_Chi_Minh").format("HH:mm:ss")}
+        </span>
+      ),
     },
     {
       title: "Video name",

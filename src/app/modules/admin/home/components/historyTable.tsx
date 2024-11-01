@@ -2,6 +2,8 @@ import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Button, Col, Image, Pagination, Row, Spin, Tag } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 interface listCameraHistoryProps {
   data: any;
   isLoading: any;
@@ -32,6 +34,8 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
   setIsIdImage,
   setDataSetViolation,
 }) => {
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
   const columCamera: ColumnsType<ReportCameraHistory> = [
     {
       title: "Index",
@@ -51,7 +55,7 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
       dataIndex: "detect_timestamp",
       render: (text) => (
         <span>
-          {dayjs(text).format("HH:mm:ss - DD/MM/YYYY")} {/* Định dạng ngày */}
+           {dayjs.unix(text).tz("Asia/Ho_Chi_Minh").format("HH:mm:ss - DD/MM/YYYY")}
         </span>
       ),
     },

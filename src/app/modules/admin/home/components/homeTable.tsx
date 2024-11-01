@@ -6,6 +6,8 @@ import {
 import { Col, Image, Pagination, Row, Spin, Tag } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 interface listCameraProps {
   data: any;
   isLoading: any;
@@ -30,6 +32,8 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
   setIsRtsp,
   setShowFirstTable,
 }) => {
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
   const changePage = (page: any) => {
     setIsPage(page);
   };
@@ -64,8 +68,8 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
       dataIndex: "date_added",
       render: (text) => (
         <span>
-          {dayjs(text).format("DD/MM/YYYY")} {/* Định dạng ngày */}
-        </span>
+        {dayjs.unix(text).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY")}
+     </span>
       ),
     },
     {
