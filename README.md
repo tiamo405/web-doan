@@ -17,3 +17,12 @@ npm install
 ```bash
 npm run dev
 ```
+
+4. **Build project**
+
+```bash
+npm run build
+```
+```bash
+npx serve -s dist
+```
