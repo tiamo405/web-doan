@@ -22,8 +22,6 @@ const Home = () => {
   const [isPageVideoViolation, setIsPageVideoViolation] = useState(1);
   const [isRtsp, setIsRtsp] = useState("");
   const [isDate, setIsDate] = useState(timestampCurrentDate);
-  console.log(isDate);
-  
   const [showFirstTable, setShowFirstTable] = useState(true);
   const [isIdImage, setIsIdImage] = useState("");
   const [dataUseSetViolation, setDataSetViolation] = useState("");
@@ -92,7 +90,11 @@ const Home = () => {
             gutter={[0, 30]}
           >
             <Col xl={24} xs={24} style={{ backgroundColor: "#fff" }}>
-              <Row justify={"space-between"} gutter={[0, 40]} style={{padding:"20px"}}>
+              <Row
+                justify={"space-between"}
+                gutter={[0, 40]}
+                style={{ padding: "20px" }}
+              >
                 <>
                   {showFirstTable ? (
                     <ListCameraTable

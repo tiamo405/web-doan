@@ -22,7 +22,7 @@ const DefaultAdmin = () => {
   };
 
   return (
-    <Layout style={{ height: "130vh" }}>
+    <Layout style={{ height: "150vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <Menu
           theme="dark"

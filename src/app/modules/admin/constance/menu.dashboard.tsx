@@ -7,9 +7,9 @@ export const MenuDashboard = () => {
       label: "Camera",
     },
     {
-        key: "/list-violation",
-        icon: <VideoCameraAddOutlined />,
-        label: "List violation",
-      },
+      key: "/list-violation",
+      icon: <VideoCameraAddOutlined />,
+      label: "List violation",
+    },
   ];
 };
