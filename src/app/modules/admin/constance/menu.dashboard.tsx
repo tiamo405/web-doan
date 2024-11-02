@@ -4,12 +4,12 @@ export const MenuDashboard = () => {
     {
       key: "/",
       icon: <CameraOutlined />,
-      label: "CAMERA MANAGEMENT",
+      label: "Camera",
     },
     {
         key: "/list-violation",
         icon: <VideoCameraAddOutlined />,
-        label: "LIST VIOLATION",
+        label: "List violation",
       },
   ];
 };
