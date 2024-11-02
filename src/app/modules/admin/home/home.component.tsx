@@ -1,6 +1,7 @@
-import { Button, Col, DatePicker, Row } from "antd";
+import { Button, Col, DatePicker, Form, Input, Modal, Row, Spin } from "antd";
 import { ListCameraTable } from "./components/homeTable";
 import {
+  useAddCamera,
   useGetCamera,
   useGetCameraHistory,
   useGetVideoViolation,
@@ -14,6 +15,7 @@ import timezone from "dayjs/plugin/timezone";
 import { ListCameraHistoryTable } from "./components/historyTable";
 import { ListVideoViolationTable } from "./components/videoViolation";
 const Home = () => {
+  const [form] = Form.useForm();
   const currentTime = dayjs();
   const formattedDate = currentTime.format("DD/MM/YYYY");
   const timestampCurrentDate = dayjs(formattedDate, "DD/MM/YYYY").unix();
@@ -25,6 +27,7 @@ const Home = () => {
   const [showFirstTable, setShowFirstTable] = useState(true);
   const [isIdImage, setIsIdImage] = useState("");
   const [dataUseSetViolation, setDataSetViolation] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showFirstTableVideoViolation, setShowFirstTableVideoViolation] =
     useState(true);
   const { data: dataCamera, isLoading: isLoadingCamera } = useGetCamera({
@@ -46,6 +49,8 @@ const Home = () => {
     });
   const { mutate: mutateSetViolation, isLoading: isLoadingSetViolation } =
     useSetViolation();
+  const { mutate: mutateAddCamera, isLoading: isLoadingAddCamera } =
+    useAddCamera();
   dayjs.extend(utc);
   dayjs.extend(timezone);
   const onChangeDate = (date: any) => {
@@ -53,6 +58,29 @@ const Home = () => {
     const timestamp = dayjs(formattedDate, "DD/MM/YYYY HH:mm:ss").unix();
     setIsDate(timestamp);
   };
+
+  const handleOk = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        const formData = new FormData();
+        formData.append("rtsp_url", values?.rtsp_url || ""),
+          formData.append("location", values?.location || ""),
+          mutateAddCamera(formData);
+        setIsModalOpen(false);
+        form.resetFields();
+      })
+      .catch((info) => {
+        console.log("Validate Failed:", info);
+      });
+  };
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <Row style={{ padding: "20px" }}>
@@ -77,7 +105,9 @@ const Home = () => {
                   />
                 </Col>
                 <Col>
-                  <Button type="primary">Add camera</Button>
+                  <Button type="primary" onClick={showModal}>
+                    Add camera
+                  </Button>
                 </Col>
               </Row>
             </Col>
@@ -144,6 +174,52 @@ const Home = () => {
           </Row>
         </Col>
       </Row>
+
+      {/* Modal add & edit camera */}
+
+      <Modal
+        title="Add camera"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText="Submit"
+        cancelText="Cancel"
+      >
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="rtsp_url"
+            label="Rtsp url"
+            rules={[{ required: true, message: "Please enter rtsp url" }]}
+          >
+            <Input placeholder="Enter rtsp url" />
+          </Form.Item>
+          <Form.Item
+            name="location"
+            label="Location"
+            rules={[{ required: true, message: "Please enter location" }]}
+          >
+            <Input placeholder="Enter location" />
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      {/* Modal loading */}
+
+      <Modal
+        open={isLoadingAddCamera}
+        footer={false}
+        closable={false}
+        centered={true}
+      >
+        <Col span={24}>
+          <Row justify={"center"}>
+            <h1>Loadingg...</h1>
+          </Row>
+          <Row justify={"center"}>
+            <Spin />
+          </Row>
+        </Col>
+      </Modal>
     </>
   );
 };

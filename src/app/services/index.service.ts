@@ -35,3 +35,9 @@ export const getAllLocationCamera = async () => {
   const result = await configAxios.get(url);
   return result.data;
 };
+
+export const addCamera = async (data: any) => {
+  const url = `/prod/api/v1/camera/create?rtsp_url=${data?.rtsp_url}&location=${data?.location}`;
+  const result = await configAxios.post(url);
+  return result.data;
+};

@@ -24,12 +24,30 @@ const DefaultAdmin = () => {
   return (
     <Layout style={{ height: "147vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "10px",
+          }}
+        >
+          <img
+            src="src\assets\logoPage.png"
+            alt="Logo"
+            style={{ maxWidth: "80%", height: "auto" }}
+          />
+        </div>
+        <hr
+          style={{ border: "1px solid #fff", width: "80%", margin: "0 auto" }}
+        />
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["/"]}
           items={MenuDashboard()}
           onSelect={handClickMenuDashboard}
+          style={{ marginTop: "20px" }}
         />
       </Sider>
       <Layout>

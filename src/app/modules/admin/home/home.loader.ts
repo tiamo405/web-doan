@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
+  addCamera,
   getCamera,
   getCameraHistory,
   getVideoViolation,
@@ -38,8 +39,34 @@ export const useSetViolation = () => {
         queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
         message.success("Set violation successfully!");
       },
-      onError: () => {
+      onError: (err: any) => {
         message.error("Set violation failed!");
+        console.log(
+          "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
+          err
+        );
+      },
+    }
+  );
+};
+
+export const useAddCamera = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (data: any) => {
+      return addCamera(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
+        message.success("Add camera successfully");
+      },
+      onError: (err: any) => {
+        message.error("Add camera failed");
+        console.log(
+          "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
+          err
+        );
       },
     }
   );
