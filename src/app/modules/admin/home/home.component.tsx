@@ -1,7 +1,18 @@
-import { Button, Col, DatePicker, Form, Input, Modal, Row, Spin } from "antd";
+import {
+  Alert,
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Modal,
+  Row,
+  Spin,
+} from "antd";
 import { ListCameraTable } from "./components/homeTable";
 import {
   useAddCamera,
+  useDeleteCamera,
   useGetCamera,
   useGetCameraHistory,
   useGetVideoViolation,
@@ -28,6 +39,8 @@ const Home = () => {
   const [isIdImage, setIsIdImage] = useState("");
   const [dataUseSetViolation, setDataSetViolation] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalDeleteCamera, setIsModalDeleteCamera] = useState(false);
+  const [isCameraSelect, setIsCameraSelect] = useState({} as any);
   const [showFirstTableVideoViolation, setShowFirstTableVideoViolation] =
     useState(true);
   const { data: dataCamera, isLoading: isLoadingCamera } = useGetCamera({
@@ -51,6 +64,8 @@ const Home = () => {
     useSetViolation();
   const { mutate: mutateAddCamera, isLoading: isLoadingAddCamera } =
     useAddCamera();
+  const { mutate: mutateDeleteCamera, isLoading: isLoadingDeleteCamera } =
+    useDeleteCamera();
   dayjs.extend(utc);
   dayjs.extend(timezone);
   const onChangeDate = (date: any) => {
@@ -79,8 +94,11 @@ const Home = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsModalDeleteCamera(false);
   };
-
+  const handleDeleteCamera = () => {
+    mutateDeleteCamera(isCameraSelect?._id);
+  };
   return (
     <>
       <Row style={{ padding: "20px" }}>
@@ -135,6 +153,8 @@ const Home = () => {
                       isPage={isPage}
                       setIsPage={setIsPage}
                       setShowFirstTable={setShowFirstTable}
+                      setIsModalDeleteCamera={setIsModalDeleteCamera}
+                      setIsCameraSelect={setIsCameraSelect}
                     />
                   ) : showFirstTableVideoViolation ? (
                     <ListCameraHistoryTable
@@ -175,7 +195,7 @@ const Home = () => {
         </Col>
       </Row>
 
-      {/* Modal add & edit camera */}
+      {/* Modal add & edit */}
 
       <Modal
         title="Add camera"
@@ -206,7 +226,7 @@ const Home = () => {
       {/* Modal loading */}
 
       <Modal
-        open={isLoadingAddCamera}
+        open={isLoadingAddCamera || isLoadingDeleteCamera}
         footer={false}
         closable={false}
         centered={true}
@@ -219,6 +239,26 @@ const Home = () => {
             <Spin />
           </Row>
         </Col>
+      </Modal>
+
+      {/* Modal delete */}
+
+      <Modal
+        title="Delete Camera"
+        open={isModalDeleteCamera}
+        onOk={handleDeleteCamera}
+        onCancel={handleCancel}
+      >
+        <Alert
+          message={
+            <p>
+              Are you sure you want to delete the camera:
+              <b> "{isCameraSelect?.location}"</b> ?
+            </p>
+          }
+          type="error"
+          showIcon
+        />
       </Modal>
     </>
   );

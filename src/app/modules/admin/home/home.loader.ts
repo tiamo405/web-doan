@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   addCamera,
+  deleteCamera,
   getCamera,
   getCameraHistory,
   getVideoViolation,
@@ -63,6 +64,28 @@ export const useAddCamera = () => {
       },
       onError: (err: any) => {
         message.error("Add camera failed");
+        console.log(
+          "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
+          err
+        );
+      },
+    }
+  );
+};
+
+export const useDeleteCamera = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (data: any) => {
+      return deleteCamera(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
+        message.success("Delete camera successfully!");
+      },
+      onError: (err: any) => {
+        message.error("Delete camera failed!");
         console.log(
           "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
           err

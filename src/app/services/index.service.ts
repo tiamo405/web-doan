@@ -41,3 +41,9 @@ export const addCamera = async (data: any) => {
   const result = await configAxios.post(url);
   return result.data;
 };
+
+export const deleteCamera = async(data:any) => {
+  const url =  `/prod/api/v1/camera/remove?cam_id=${data?.cam_id}`;
+  const result = await configAxios.delete(url);
+  return result.data;
+}

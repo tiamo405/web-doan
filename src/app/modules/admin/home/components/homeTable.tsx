@@ -1,8 +1,4 @@
-import {
-  DeleteOutlined,
-  EditOutlined,
-  HistoryOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, HistoryOutlined } from "@ant-design/icons";
 import { Col, Image, Pagination, Row, Spin, Tag } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
@@ -16,6 +12,8 @@ interface listCameraProps {
   isPage: any;
   setIsRtsp: any;
   setShowFirstTable: any;
+  setIsModalDeleteCamera: any;
+  setIsCameraSelect: any;
 }
 
 interface ReportCameraHistory {
@@ -31,6 +29,8 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
   isPage,
   setIsRtsp,
   setShowFirstTable,
+  setIsModalDeleteCamera,
+  setIsCameraSelect,
 }) => {
   dayjs.extend(utc);
   dayjs.extend(timezone);
@@ -68,8 +68,8 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
       dataIndex: "date_added",
       render: (text) => (
         <span>
-        {dayjs.unix(text).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY")}
-     </span>
+          {dayjs.unix(text).tz("Asia/Ho_Chi_Minh").format("DD/MM/YYYY")}
+        </span>
       ),
     },
     {
@@ -104,10 +104,10 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
               className="history-button"
               onClick={() => handleRtsp(data)}
             />
-            <EditOutlined
+            {/* <EditOutlined
               className="edit-button"
               onClick={() => handleEdit(data)}
-            />
+            /> */}
             <DeleteOutlined
               className="delete-button"
               onClick={() => handleDeteteSegment(data)}
@@ -115,11 +115,12 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
           </>
         );
         function handleDeteteSegment(data: any) {
-          console.log(data);
+          setIsCameraSelect(data);
+          setIsModalDeleteCamera(true);
         }
-        function handleEdit(data: any) {
-          console.log(data);
-        }
+        // function handleEdit(data: any) {
+        //   console.log(data);
+        // }
       },
     },
   ];
