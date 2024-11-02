@@ -30,7 +30,7 @@ export const ViolationList = () => {
         <Col span={24} xxl={24} xl={24}>
           <Row justify={"space-between"}>
             <Col>
-              <span className="titleMainDashboard">LIST VIOLATION</span>{" "}
+              <span className="titleMainDashboard">VIOLATIONS LIST</span>{" "}
             </Col>
             <Col>
               <Row gutter={[10, 0]}>

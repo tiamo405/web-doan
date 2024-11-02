@@ -22,7 +22,7 @@ const DefaultAdmin = () => {
   };
 
   return (
-    <Layout style={{ height: "150vh" }}>
+    <Layout style={{ height: "147vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <Menu
           theme="dark"
@@ -59,12 +59,13 @@ const DefaultAdmin = () => {
               <Popover
                 content={
                   <div>
-                    <div
+                    <Button
                       className="pointer"
+                      style={{ marginTop: "10px" }}
                       // onClick={() => handleLogout("/login")}
                     >
-                      {/* {tHeader("Logout")} */} hiihi
-                    </div>
+                      {/* {tHeader("Logout")} */} Logout
+                    </Button>
                   </div>
                 }
                 title={
@@ -74,14 +75,14 @@ const DefaultAdmin = () => {
                       icon={<UserOutlined />}
                       style={{ marginRight: 10 }}
                     />
-                    {/* {dataUser?.email} */}HiHi
+                    {/* {dataUser?.email} */}namtp@admin.com
                   </div>
                 }
               >
                 <Avatar size={35} icon={<UserOutlined />} className="pointer" />
               </Popover>
             </Col>
-            {/* <Col style={{ marginLeft: "10px" }}>{dataUser?.name}</Col> */}
+            <Col style={{ marginLeft: "10px" }}>Trần Phương Nam</Col>
           </Row>
         </Header>
 
