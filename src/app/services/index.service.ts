@@ -42,8 +42,14 @@ export const addCamera = async (data: any) => {
   return result.data;
 };
 
-export const deleteCamera = async(data:any) => {
-  const url =  `/prod/api/v1/camera/remove?cam_id=${data?.cam_id}`;
+export const deleteCamera = async (data: any) => {
+  const url = `/prod/api/v1/camera/remove?cam_id=${data?.cam_id}`;
   const result = await configAxios.delete(url);
   return result.data;
-}
+};
+
+export const deleteViolation = async (data: any) => {
+  const url = `/prod/api/v1/view/delete_violation?id_image=${data?.id_image}`;
+  const result = await configAxios.delete(url);
+  return result.data;
+};

@@ -1,4 +1,8 @@
-import { ArrowLeftOutlined, PlayCircleOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  DeleteOutlined,
+  PlayCircleOutlined,
+} from "@ant-design/icons";
 import { Alert, Button, Col, Modal, Pagination, Row, Spin, Switch } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
@@ -6,6 +10,7 @@ import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
+import { useDeleteViolation } from "../home.loader";
 interface listVideoViolationProps {
   data: any;
   isLoading: any;
@@ -102,11 +107,14 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
   useEffect(() => {
     setIsViolation(dataUseSetViolation.is_violation);
   }, [dataUseSetViolation]);
+
+  const { mutate: mutateDeleteViolation, isLoading: isLoadingDeleteViolation } =
+    useDeleteViolation();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [isConfirmModal, setIsConfirmModal] = useState(false);
   const [tempSwitchValue, setTempSwitchValue] = useState();
-
+  const [isModalDeleteViolation, setIsModalDeleteViolation] = useState(false);
   const showConfirmModal = (value: any) => {
     setTempSwitchValue(value);
     setIsConfirmModal(true);
@@ -138,6 +146,18 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
     setIsModalVisible(false);
     setVideoUrl("");
   };
+
+  const handleDeleteViolation = () => {
+    setIsModalDeleteViolation(true);
+  };
+
+  const handlOkDeleteViolation = () => {
+    mutateDeleteViolation({ id_image: dataUseSetViolation?._id });
+  };
+
+  const handleCancelDeleteViolation = () => {
+    setIsModalDeleteViolation(false);
+  };
   return (
     <>
       <Col span={24}>
@@ -150,6 +170,15 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
             checked={isViolation}
             onChange={(checkedClick) => showConfirmModal(checkedClick)}
           />
+          <Button
+            type="primary"
+            danger
+            icon={<DeleteOutlined />}
+            style={{ marginRight: "30px" }} // Tạo khoảng cách giữa nút Delete và nút Back
+            onClick={handleDeleteViolation}
+          >
+            Delete
+          </Button>
           <Button
             type="primary"
             icon={<ArrowLeftOutlined />}
@@ -214,7 +243,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
 
       {/* Modal loading */}
       <Modal
-        open={isLoadingSetViolation}
+        open={isLoadingSetViolation || isLoadingDeleteViolation}
         footer={false}
         closable={false}
         centered={true}
@@ -227,6 +256,26 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
             <Spin />
           </Row>
         </Col>
+      </Modal>
+
+      {/* Modal delete */}
+
+      <Modal
+        title="Delete violation"
+        open={isModalDeleteViolation}
+        onOk={handlOkDeleteViolation}
+        onCancel={handleCancelDeleteViolation}
+      >
+        <Alert
+          message={
+            <p>
+              Are you sure you want to delete this violation image in "
+              <b>{dataUseSetViolation?.location}"</b> ?
+            </p>
+          }
+          type="error"
+          showIcon
+        />
       </Modal>
     </>
   );

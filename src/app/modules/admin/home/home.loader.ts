@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   addCamera,
   deleteCamera,
+  deleteViolation,
   getCamera,
   getCameraHistory,
   getVideoViolation,
@@ -83,6 +84,28 @@ export const useDeleteCamera = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
         message.success("Delete camera successfully!");
+      },
+      onError: (err: any) => {
+        message.error("Delete camera failed!");
+        console.log(
+          "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
+          err
+        );
+      },
+    }
+  );
+};
+
+export const useDeleteViolation = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (data: any) => {
+      return deleteViolation(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
+        message.success("Delete violation successfully!");
       },
       onError: (err: any) => {
         message.error("Delete camera failed!");
