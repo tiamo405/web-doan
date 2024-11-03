@@ -153,6 +153,8 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
 
   const handlOkDeleteViolation = () => {
     mutateDeleteViolation({ id_image: dataUseSetViolation?._id });
+    setIsModalDeleteViolation(false);
+    setShowFirstTableVideoViolation(true);
   };
 
   const handleCancelDeleteViolation = () => {
