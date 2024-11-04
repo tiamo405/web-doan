@@ -9,7 +9,6 @@ import {
 import { useState } from "react";
 
 const { Header, Sider, Content, Footer } = Layout;
-
 const DefaultAdmin = () => {
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -20,7 +19,9 @@ const DefaultAdmin = () => {
   const handClickMenuDashboard = (data: any) => {
     navigate(data.key);
   };
-
+  const handleLogout = (key:any) => {
+    navigate(key)
+  }
   return (
     <Layout style={{ height: "147vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -80,9 +81,9 @@ const DefaultAdmin = () => {
                     <Button
                       className="pointer"
                       style={{ marginTop: "10px" }}
-                      // onClick={() => handleLogout("/login")}
+                      onClick={() => handleLogout("/login")}
                     >
-                      {/* {tHeader("Logout")} */} Logout
+                      Logout
                     </Button>
                   </div>
                 }
