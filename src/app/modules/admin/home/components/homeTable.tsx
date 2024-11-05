@@ -78,9 +78,9 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
       dataIndex: "location",
     },
     {
-      title: "Add by customer id",
+      title: "Add by",
       align: "center",
-      dataIndex: "add_by_customer_id",
+      dataIndex: "add_by",
     },
     {
       title: "Origin image",
