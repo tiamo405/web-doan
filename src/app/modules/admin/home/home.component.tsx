@@ -96,8 +96,10 @@ const Home = () => {
     setIsModalOpen(false);
     setIsModalDeleteCamera(false);
   };
+
   const handleDeleteCamera = () => {
-    mutateDeleteCamera(isCameraSelect?._id);
+    mutateDeleteCamera({cam_id:isCameraSelect?._id});
+    setIsModalDeleteCamera(false);
   };
   return (
     <>
