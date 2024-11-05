@@ -37,7 +37,12 @@ export const getAllLocationCamera = async () => {
 };
 
 export const addCamera = async (data: any) => {
-  const url = `/prod/api/v1/camera/create?rtsp_url=${data?.rtsp_url}&location=${data?.location}`;
+  const url = `/prod/api/v1/camera/create?rtsp_url=${encodeURIComponent(
+    data?.rtsp_url || ""
+  )}&location=${encodeURIComponent(
+    data?.location || ""
+  )}&add_by_customer_id=671b0c1be9383de32aefd299`;
+
   const result = await configAxios.post(url);
   return result.data;
 };

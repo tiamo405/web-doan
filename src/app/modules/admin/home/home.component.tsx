@@ -78,10 +78,7 @@ const Home = () => {
     form
       .validateFields()
       .then((values) => {
-        const formData = new FormData();
-        formData.append("rtsp_url", values?.rtsp_url || ""),
-          formData.append("location", values?.location || ""),
-          mutateAddCamera(formData);
+        mutateAddCamera(values); // Truyền trực tiếp values
         setIsModalOpen(false);
         form.resetFields();
       })
@@ -98,7 +95,7 @@ const Home = () => {
   };
 
   const handleDeleteCamera = () => {
-    mutateDeleteCamera({cam_id:isCameraSelect?._id});
+    mutateDeleteCamera({ cam_id: isCameraSelect?._id });
     setIsModalDeleteCamera(false);
   };
   return (
