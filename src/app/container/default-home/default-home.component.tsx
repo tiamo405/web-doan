@@ -34,7 +34,7 @@ const DefaultAdmin = () => {
           }}
         >
           <img
-            src="src\assets\logoPage.png"
+            src="src\assets\logo2.png"
             alt="Logo"
             style={{ maxWidth: "80%", height: "auto" }}
           />
