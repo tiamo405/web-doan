@@ -35,8 +35,6 @@ configAxios.interceptors.response.use(
         setTimeout(() => {
           window.location.href = "/login";
         }, 300);
-      } else {
-        message.error("An error occurred. Please try again.");
       }
     }
     return Promise.reject(error);
