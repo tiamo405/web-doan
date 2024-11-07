@@ -62,14 +62,6 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
       dataIndex: "rtsp_cam",
     },
     {
-      title: "Is activate",
-      align: "center",
-      dataIndex: "is_activate",
-      render: (text) => (
-        <Tag color={text ? "green" : "red"}>{text ? "Active" : "Inactive"}</Tag>
-      ),
-    },
-    {
       title: "Date added",
       align: "center",
       dataIndex: "date_added",
