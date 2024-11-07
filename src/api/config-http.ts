@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BASE_URL_BACKENT } from "../utils/api";
-import { message } from "antd";
 
 export const configAxios = axios.create({
   baseURL: BASE_URL_BACKENT,

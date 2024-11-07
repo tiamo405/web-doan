@@ -2,7 +2,7 @@ import {
   DeleteOutlined,
   HistoryOutlined,
 } from "@ant-design/icons";
-import { Col, Image, Pagination, Row, Spin, Tag } from "antd";
+import { Col, Image, Pagination, Row, Spin } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
