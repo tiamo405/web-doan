@@ -123,7 +123,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
     setIsConfirmModal(false);
     setIsViolation(tempSwitchValue!);
     mutateSetViolation({
-      id_image: dataUseSetViolation._id,
+      image_id: dataUseSetViolation._id,
       is_violation: tempSwitchValue,
     });
   };

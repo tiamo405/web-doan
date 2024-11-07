@@ -19,8 +19,8 @@ export const getVideoViolation = async (data: any) => {
 };
 
 export const setViolocation = async (data: any) => {
-  const url = `/prod/api/v1/view/set_violation?id_image=${data?.id_image}&is_violation=${data?.is_violation}`;
-  const result = await configAxios.post(url);
+  const url = `/prod/api/v1/view/set_violation`;
+  const result = await configAxios.post(url, data);
   return result.data;
 };
 
@@ -37,13 +37,8 @@ export const getAllLocationCamera = async () => {
 };
 
 export const addCamera = async (data: any) => {
-  const url = `/prod/api/v1/camera/create?rtsp_url=${encodeURIComponent(
-    data?.rtsp_url || ""
-  )}&location=${encodeURIComponent(
-    data?.location || ""
-  )}&add_by_customer_id=671b0c1be9383de32aefd299`;
-
-  const result = await configAxios.post(url);
+  const url = `/prod/api/v1/camera/create`;
+  const result = await configAxios.post(url, data);
   return result.data;
 };
 
@@ -58,3 +53,9 @@ export const deleteViolation = async (data: any) => {
   const result = await configAxios.delete(url);
   return result.data;
 };
+
+export const login = async(data:any) => {
+  const url = `/login?`;
+  const result = await configAxios.post(url, data);
+  return result.data;
+}

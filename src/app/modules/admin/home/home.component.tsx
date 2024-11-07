@@ -78,7 +78,11 @@ const Home = () => {
     form
       .validateFields()
       .then((values) => {
-        mutateAddCamera(values); // Truyền trực tiếp values
+        const formData = new FormData();
+        formData.append("rtsp_url", values?.rtsp_url || ""),
+          formData.append("location", values?.location || ""),
+          formData.append("add_by_customer_id", "671b0c1be9383de32aefd299"),
+          mutateAddCamera(formData);
         setIsModalOpen(false);
         form.resetFields();
       })

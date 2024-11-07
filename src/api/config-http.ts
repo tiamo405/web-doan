@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL_BACKENT } from "../utils/api";
+import { message } from "antd";
 
-// const accessToken = localStorage.getItem("accessToken")
 export const configAxios = axios.create({
   baseURL: BASE_URL_BACKENT,
   headers: {
@@ -12,9 +12,9 @@ export const configAxios = axios.create({
 });
 configAxios.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const accessToken = localStorage.getItem("jwtToken");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -23,17 +23,22 @@ configAxios.interceptors.request.use(
   }
 );
 
-// configAxios.interceptors.response.use(
-//   function (response) {
-//     return response;
-//   },
-//   function (error) {
-//     if (error.response && error.response.status === 401) {
-//       // Xóa token khỏi localStorage khi hết hạn hoặc không hợp lệ
-//       localStorage.removeItem("token");
-//       // Điều hướng đến trang đăng nhập
-//       window.location.href = "/login";
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+configAxios.interceptors.response.use(
+  function (response) {
+    return response;
+  },
+  function (error) {
+    if (error.response) {
+      // Kiểm tra mã lỗi
+      if (error.response.status === 401) {
+        localStorage.removeItem("token");
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 300);
+      } else {
+        message.error("An error occurred. Please try again.");
+      }
+    }
+    return Promise.reject(error);
+  }
+);

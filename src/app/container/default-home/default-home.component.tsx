@@ -19,9 +19,12 @@ const DefaultAdmin = () => {
   const handClickMenuDashboard = (data: any) => {
     navigate(data.key);
   };
-  const handleLogout = (key:any) => {
-    navigate(key)
+  const handleLogout = () => {
+    localStorage.removeItem("jwtToken");
+    localStorage.setItem("isLoginToken", "false");
+    window.location.href = "/login";
   }
+
   return (
     <Layout style={{ height: "147vh" }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -81,7 +84,7 @@ const DefaultAdmin = () => {
                     <Button
                       className="pointer"
                       style={{ marginTop: "10px" }}
-                      onClick={() => handleLogout("/login")}
+                      onClick={() => handleLogout()}
                     >
                       Logout
                     </Button>
