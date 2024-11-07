@@ -35,8 +35,8 @@ const {mutate: mutateLogin} = useLogin();
                 className="login__input"
                 id="login-user"
                 placeholder=" "
-                value={user} // Liên kết state với input
-                onChange={(e) => setUser(e.target.value)} // Cập nhật state khi nhập
+                value={user}
+                onChange={(e) => setUser(e.target.value)}
               />
               <label htmlFor="login-email" className="login__label">
                 Email

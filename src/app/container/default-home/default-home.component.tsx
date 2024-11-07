@@ -22,8 +22,13 @@ const DefaultAdmin = () => {
   const handleLogout = () => {
     localStorage.removeItem("jwtToken");
     localStorage.setItem("isLoginToken", "false");
+    localStorage.removeItem("username");
+    localStorage.removeItem("email");
+    localStorage.removeItem("phoneNumber");
+    localStorage.removeItem("full_name");
+    localStorage.removeItem("role_id");
     window.location.href = "/login";
-  }
+  };
 
   return (
     <Layout style={{ height: "147vh" }}>
@@ -97,14 +102,17 @@ const DefaultAdmin = () => {
                       icon={<UserOutlined />}
                       style={{ marginRight: 10 }}
                     />
-                    {/* {dataUser?.email} */}namtp@admin.com
+                    {localStorage.getItem("email")}
                   </div>
                 }
               >
                 <Avatar size={35} icon={<UserOutlined />} className="pointer" />
               </Popover>
             </Col>
-            <Col style={{ marginLeft: "10px" }}>Trần Phương Nam</Col>
+            <Col style={{ marginLeft: "10px" }}>
+              {" "}
+              <h3>{localStorage.getItem("full_name")}</h3>
+            </Col>
           </Row>
         </Header>
 

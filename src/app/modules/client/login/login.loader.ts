@@ -14,9 +14,16 @@ export const useLogin = () => {
     },
     {
       onSuccess: (data) => {
+        console.log(data);
+        
         if (data.access_token) {
           localStorage.setItem("jwtToken", data.access_token);
           localStorage.setItem("isLoginToken", "true");
+          localStorage.setItem("username", data.user.username);
+          localStorage.setItem("email", data.user.email);
+          localStorage.setItem("phoneNumber", data.user.phoneNumber);
+          localStorage.setItem("full_name", data.user.full_name);
+          localStorage.setItem("role_id", data.user.role_id);
         }
         queryClient.invalidateQueries(CACHE_KEYS.InforLogin);
         message.success("Login successfully");
