@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   addCamera,
+  changeStatusCamera,
   deleteCamera,
   deleteViolation,
   getCamera,
@@ -47,6 +48,24 @@ export const useSetViolation = () => {
           "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
           err
         );
+      },
+    }
+  );
+};
+
+export const useChangeStatusCamera = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (data: any) => {
+      return changeStatusCamera(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
+        message.success("Camera status changed successfully!");
+      },
+      onError: () => {
+        message.error("Camera status change failed!");
       },
     }
   );

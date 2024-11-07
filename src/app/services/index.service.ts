@@ -59,3 +59,9 @@ export const login = async(data:any) => {
   const result = await configAxios.post(url, data);
   return result.data;
 }
+
+export const changeStatusCamera = async(data:any) => {
+  const url = `/prod/api/v1/camera/change_is_active?cam_id=${data?.cam_id}&is_active=${data?.is_active}`;
+  const result = await configAxios.post(url);
+  return result.data;
+}

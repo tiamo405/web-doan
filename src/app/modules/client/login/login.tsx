@@ -7,7 +7,7 @@ export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-const {mutate: mutateLogin} = useLogin();
+  const { mutate: mutateLogin } = useLogin();
   const handlePasswordToggle = () => {
     setShowPassword(!showPassword);
   };
@@ -17,7 +17,7 @@ const {mutate: mutateLogin} = useLogin();
     mutateLogin({
       username: user,
       password: password,
-    })
+    });
   };
 
   return (
@@ -39,7 +39,7 @@ const {mutate: mutateLogin} = useLogin();
                 onChange={(e) => setUser(e.target.value)}
               />
               <label htmlFor="login-email" className="login__label">
-                Email
+                User name
               </label>
             </div>
           </div>

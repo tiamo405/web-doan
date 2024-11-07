@@ -12,6 +12,7 @@ import {
 import { ListCameraTable } from "./components/homeTable";
 import {
   useAddCamera,
+  useChangeStatusCamera,
   useDeleteCamera,
   useGetCamera,
   useGetCameraHistory,
@@ -40,9 +41,11 @@ const Home = () => {
   const [dataUseSetViolation, setDataSetViolation] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalDeleteCamera, setIsModalDeleteCamera] = useState(false);
+  const [isModalChangeStatusCamera, setIsModalChangeStatusCamera] = useState(false);
   const [isCameraSelect, setIsCameraSelect] = useState({} as any);
   const [showFirstTableVideoViolation, setShowFirstTableVideoViolation] =
     useState(true);
+    const [valueChangeStatusCamera, setValueChangeStatusCamera] = useState("")
   const { data: dataCamera, isLoading: isLoadingCamera } = useGetCamera({
     page: isPage,
     limit: 10,
@@ -60,6 +63,10 @@ const Home = () => {
       page: isPageVideoViolation,
       limit: 10,
     });
+  const {
+    mutate: mutateChangeStatusCamera,
+    isLoading: isLoadingChangeStatusCamera,
+  } = useChangeStatusCamera();
   const { mutate: mutateSetViolation, isLoading: isLoadingSetViolation } =
     useSetViolation();
   const { mutate: mutateAddCamera, isLoading: isLoadingAddCamera } =
@@ -96,12 +103,17 @@ const Home = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
     setIsModalDeleteCamera(false);
+    setIsModalChangeStatusCamera(false);
   };
 
   const handleDeleteCamera = () => {
     mutateDeleteCamera({ cam_id: isCameraSelect?._id });
     setIsModalDeleteCamera(false);
   };
+  const handleChangeStatusCamera = () => {
+  setIsModalChangeStatusCamera(false);
+  mutateChangeStatusCamera({ cam_id: isCameraSelect?._id, is_active: valueChangeStatusCamera });
+  }
   return (
     <>
       <Row style={{ padding: "20px" }}>
@@ -158,6 +170,8 @@ const Home = () => {
                       setShowFirstTable={setShowFirstTable}
                       setIsModalDeleteCamera={setIsModalDeleteCamera}
                       setIsCameraSelect={setIsCameraSelect}
+                      setIsModalChangeStatusCamera={setIsModalChangeStatusCamera}
+                      setValueChangeStatusCamera={setValueChangeStatusCamera}
                     />
                   ) : showFirstTableVideoViolation ? (
                     <ListCameraHistoryTable
@@ -229,7 +243,7 @@ const Home = () => {
       {/* Modal loading */}
 
       <Modal
-        open={isLoadingAddCamera || isLoadingDeleteCamera}
+        open={isLoadingAddCamera || isLoadingDeleteCamera || isLoadingChangeStatusCamera}
         footer={false}
         closable={false}
         centered={true}
@@ -259,6 +273,20 @@ const Home = () => {
               <b> "{isCameraSelect?.location}"</b> ?
             </p>
           }
+          type="error"
+          showIcon
+        />
+      </Modal>
+
+      {/* Modal change status camera  */}
+      <Modal
+        title="Change status camera"
+        open={isModalChangeStatusCamera}
+        onOk={handleChangeStatusCamera}
+        onCancel={handleCancel}
+      >
+        <Alert
+          message={<p>Are you sure you want to change the camera status?</p>}
           type="error"
           showIcon
         />
