@@ -81,6 +81,22 @@ img {
 .login__content, .login__box {
   display: grid;
 }
+input:-webkit-autofill {
+  background-color: white !important; /* Hoặc có thể thay đổi theo màu nền bạn muốn */
+  color: white !important; /* Đặt màu chữ thành màu trắng */
+}
+
+input:-webkit-autofill::first-line {
+  font-size: 16px !important;
+  color: white !important; /* Đặt màu chữ đầu dòng cũng là màu trắng */
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 .login__content {
   row-gap: 1.75rem;
   margin-bottom: 1.5rem;
