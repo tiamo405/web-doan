@@ -42,7 +42,7 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
     //   dataIndex: "camera_id",
     // },
     {
-      title: "Phát hiện dấu thời gian",
+      title: "Thời gian phát hiện",
       align: "center",
       dataIndex: "detect_timestamp",
       render: (text) => (
