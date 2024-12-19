@@ -9,7 +9,7 @@ export const MenuDashboard = () => {
     {
       key: "/list-violation",
       icon: <VideoCameraAddOutlined />,
-      label: "List violation",
+      label: "Danh sách vi phạm",
     },
   ];
 };

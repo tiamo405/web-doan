@@ -26,11 +26,11 @@ export const useLogin = () => {
           localStorage.setItem("role_id", data.user.role_id);
         }
         queryClient.invalidateQueries(CACHE_KEYS.InforLogin);
-        message.success("Login successfully");
+        message.success("Đăng nhập thành công!");
         navigate("/");
       },
       onError: () => {
-        message.error("Login failed");
+        message.error("Đăng nhập thất bại!");
       },
     }
   );

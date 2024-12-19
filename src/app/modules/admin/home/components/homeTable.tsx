@@ -50,19 +50,19 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
   };
   const columCamera: ColumnsType<ReportCameraHistory> = [
     {
-      title: "Index",
+      title: "STT",
       align: "center",
       render: (_value, _record, index) => {
         return (isPage - 1) * 10 + index + 1;
       },
     },
     {
-      title: "Rtsp Camera",
+      title: "Link rtsp camera",
       align: "center",
       dataIndex: "rtsp_cam",
     },
     {
-      title: "Date added",
+      title: "Ngày thêm",
       align: "center",
       dataIndex: "date_added",
       render: (text) => (
@@ -72,17 +72,17 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
       ),
     },
     {
-      title: "Location",
+      title: "Vị trí",
       align: "center",
       dataIndex: "location",
     },
     {
-      title: "Add by",
+      title: "Thêm bởi",
       align: "center",
       dataIndex: "add_by",
     },
     {
-      title: "Origin image",
+      title: "Hình ảnh",
       align: "center",
       dataIndex: "origin_image",
       render: (text) => (
@@ -94,7 +94,7 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
       ),
     },
     {
-      title: "Status camera",
+      title: "Trạng thái camera",
       align: "center",
       render: (_, data: any) => {
         return (
@@ -106,8 +106,8 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
                   checked={data?.is_activate}
                   onChange={(event) => handleToggleCamera(event, data)}
                 />
-                <span className="switch-left">On</span>
-                <span className="switch-right">Off</span>
+                <span className="switch-left">Bật</span>
+                <span className="switch-right">Tắt</span>
               </label>
             </div>
           </>
@@ -121,7 +121,7 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
       },
     },
     {
-      title: "Action",
+      title: "Chức năng",
       align: "center",
       render: (_, data: any) => {
         return (

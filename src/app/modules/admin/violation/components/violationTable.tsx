@@ -30,7 +30,7 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
   dayjs.extend(timezone);
   const columCamera: ColumnsType<ReportCameraHistory> = [
     {
-      title: "Index",
+      title: "STT",
       align: "center",
       render: (_value, _record, index) => {
         return (isPageHistory - 1) * 5 + index + 1;
@@ -42,7 +42,7 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
     //   dataIndex: "camera_id",
     // },
     {
-      title: "Detect timestamp",
+      title: "Phát hiện dấu thời gian",
       align: "center",
       dataIndex: "detect_timestamp",
       render: (text) => (
@@ -55,7 +55,7 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
       ),
     },
     {
-      title: "Is violation",
+      title: "Vi phạm",
       align: "center",
       dataIndex: "is_violation",
       render: (text) => {
@@ -65,7 +65,7 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
       },
     },
     {
-      title: "Image",
+      title: "Hình ảnh",
       align: "center",
       dataIndex: "url_image",
       render: (text) => (
@@ -77,7 +77,7 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
       ),
     },
     {
-      title: "Location",
+      title: "Vị trí",
       align: "center",
       dataIndex: "location",
     },

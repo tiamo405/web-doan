@@ -40,10 +40,10 @@ export const useSetViolation = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
-        message.success("Set violation successfully!");
+        message.success("Thiết lập vi phạm thành công!");
       },
       onError: (err: any) => {
-        message.error("Set violation failed!");
+        message.error("Thiết lập vi phạm không thành công!");
         console.log(
           "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
           err
@@ -62,10 +62,10 @@ export const useChangeStatusCamera = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
-        message.success("Camera status changed successfully!");
+        message.success("Trạng thái camera đã được thay đổi thành công!");
       },
       onError: () => {
-        message.error("Camera status change failed!");
+        message.error("Không thể thay đổi trạng thái camera!");
       },
     }
   );
@@ -80,10 +80,10 @@ export const useAddCamera = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
-        message.success("Add camera successfully");
+        message.success("Đã thêm camera thành công!");
       },
       onError: (err: any) => {
-        message.error("Add camera failed");
+        message.error("Thêm camera không thành công");
         console.log(
           "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
           err
@@ -102,10 +102,10 @@ export const useDeleteCamera = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
-        message.success("Delete camera successfully!");
+        message.success("Xóa camera thành công!");
       },
       onError: (err: any) => {
-        message.error("Delete camera failed!");
+        message.error("Xóa camera không thành công!");
         console.log(
           "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
           err
@@ -124,10 +124,10 @@ export const useDeleteViolation = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
-        message.success("Delete violation successfully!");
+        message.success("Xóa vi phạm thành công!");
       },
       onError: (err: any) => {
-        message.error("Delete camera failed!");
+        message.error("Xóa camera không thành công!");
         console.log(
           "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
           err

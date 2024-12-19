@@ -124,8 +124,8 @@ const Home = () => {
                 {showFirstTable
                   ? "CAMERA"
                   : showFirstTableVideoViolation
-                  ? "CAMERA HISTORY"
-                  : "VIOLATION VIDEOS"}
+                  ? "LỊCH SỬ CAMERA"
+                  : "VIDEO VI PHẠM"}
               </span>{" "}
             </Col>
             <Col>
@@ -139,7 +139,7 @@ const Home = () => {
                 </Col>
                 <Col>
                   <Button type="primary" onClick={showModal}>
-                    Add camera
+                    Thêm camera
                   </Button>
                 </Col>
               </Row>
@@ -215,27 +215,27 @@ const Home = () => {
       {/* Modal add & edit */}
 
       <Modal
-        title="Add camera"
+        title="Thêm camera"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        okText="Submit"
-        cancelText="Cancel"
+        okText="Thêm"
+        cancelText="Huỷ"
       >
         <Form form={form} layout="vertical">
           <Form.Item
             name="rtsp_url"
-            label="Rtsp url"
-            rules={[{ required: true, message: "Please enter rtsp url" }]}
+            label="Link rtsp"
+            rules={[{ required: true, message: "Vui lòng nhập link rtsp" }]}
           >
-            <Input placeholder="Enter rtsp url" />
+            <Input placeholder="Nhập link rtsp"/>
           </Form.Item>
           <Form.Item
             name="location"
-            label="Location"
-            rules={[{ required: true, message: "Please enter location" }]}
+            label="Vị trí"
+            rules={[{ required: true, message: "Vui lòng nhập vị trí" }]}
           >
-            <Input placeholder="Enter location" />
+            <Input placeholder="Nhập vị trí" />
           </Form.Item>
         </Form>
       </Modal>
@@ -250,7 +250,7 @@ const Home = () => {
       >
         <Col span={24}>
           <Row justify={"center"}>
-            <h1>Loadingg...</h1>
+            <h1>Vui lòng chờ...</h1>
           </Row>
           <Row justify={"center"}>
             <Spin />
@@ -261,7 +261,7 @@ const Home = () => {
       {/* Modal delete */}
 
       <Modal
-        title="Delete Camera"
+        title="Xoá camera"
         open={isModalDeleteCamera}
         onOk={handleDeleteCamera}
         onCancel={handleCancel}
@@ -269,7 +269,7 @@ const Home = () => {
         <Alert
           message={
             <p>
-              Are you sure you want to delete the camera:
+              Bạn có chắc chắn muốn xoá camera:
               <b> "{isCameraSelect?.location}"</b> ?
             </p>
           }
@@ -280,13 +280,15 @@ const Home = () => {
 
       {/* Modal change status camera  */}
       <Modal
-        title="Change status camera"
+        title="Thay đổi trạng thái camera"
         open={isModalChangeStatusCamera}
         onOk={handleChangeStatusCamera}
         onCancel={handleCancel}
+        okText="Thêm"
+        cancelText="Huỷ"
       >
         <Alert
-          message={<p>Are you sure you want to change the camera status?</p>}
+          message={<p>Bạn có chắc chắn muốn thay đổi trạng thái camera?</p>}
           type="error"
           showIcon
         />

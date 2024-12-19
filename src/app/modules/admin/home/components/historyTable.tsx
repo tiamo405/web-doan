@@ -38,7 +38,7 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
   dayjs.extend(timezone);
   const columCamera: ColumnsType<ReportCameraHistory> = [
     {
-      title: "Index",
+      title: "STT",
       align: "center",
       render: (_value, _record, index) => {
         return (isPageHistory - 1) * 5 + index + 1;
@@ -50,7 +50,7 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
     //   dataIndex: "camera_id",
     // },
     {
-      title: "Detect timestamp",
+      title: "Thời gian phát hiện",
       align: "center",
       dataIndex: "detect_timestamp",
       render: (text) => (
@@ -60,7 +60,7 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
       ),
     },
     {
-      title: "Is violation",
+      title: "Vi phạm",
       align: "center",
       dataIndex: "is_violation",
       render: (text) => {
@@ -70,7 +70,7 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
       },
     },
     {
-      title: "Image",
+      title: "Hình ảnh",
       align: "center",
       dataIndex: "url_image",
       render: (text) => (
@@ -82,17 +82,17 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
       ),
     },
     {
-      title: "Location",
+      title: "Vi trí",
       align: "center",
       dataIndex: "location",
     },
     {
-      title: "Action",
+      title: "Chức năng",
       align: "center",
 
       render: (_, record) => (
         <Button type="primary" onClick={() => handleVideoViolation(record)}>
-          Video inspection
+          Kiểm tra video
         </Button>
       ),
     },
@@ -120,7 +120,7 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
             icon={<ArrowLeftOutlined />}
             onClick={handleBack}
           >
-            Back
+            Quay lại
           </Button>
         </Row>
         {isLoading ? (

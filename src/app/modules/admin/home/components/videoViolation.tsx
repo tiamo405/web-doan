@@ -43,7 +43,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
   dayjs.extend(timezone);
   const columVideoViolation: ColumnsType<ReportVideoViolation> = [
     {
-      title: "Index",
+      title: "STT",
       align: "center",
       render: (_value, _record, index) => {
         return (isPageVideoViolation - 1) * 5 + index + 1;
@@ -65,7 +65,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
     //   ),
     // },
     {
-      title: "Start time",
+      title: "Thời gian bắt đầu",
       align: "center",
       dataIndex: "start_time",
       render: (text) => (
@@ -75,7 +75,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
       ),
     },
     {
-      title: "End time",
+      title: "Thời gian kết thúc",
       align: "center",
       dataIndex: "end_time",
       render: (text) => (
@@ -85,7 +85,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
       ),
     },
     {
-      title: "Video name",
+      title: "Tên video",
       align: "center",
       dataIndex: "video_path",
     },
@@ -164,7 +164,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
     <>
       <Col span={24}>
         <Row justify="end" align="middle" style={{ marginBottom: "20px" }}>
-          <b style={{ fontSize: "17px" }}>Administrator verify violation: </b>
+          <b style={{ fontSize: "17px" }}>Người quản trị xác minh vi phạm: </b>
           <Switch
             checkedChildren="True"
             unCheckedChildren="False"
@@ -179,14 +179,14 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
             style={{ marginRight: "30px" }} // Tạo khoảng cách giữa nút Delete và nút Back
             onClick={handleDeleteViolation}
           >
-            Delete
+            Xoá
           </Button>
           <Button
             type="primary"
             icon={<ArrowLeftOutlined />}
             onClick={handleBack}
           >
-            Back
+            Quay lại
           </Button>
         </Row>
         {isLoading ? (
@@ -211,7 +211,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
         </Row>
       </Col>
       <Modal
-        title="Watch Video"
+        title="Xem video"
         open={isModalVisible}
         onCancel={handleCancel}
         footer={null}
@@ -229,15 +229,15 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
       </Modal>
 
       <Modal
-        title="Confirm changes"
+        title="Xác nhận thay đổi"
         onOk={handleOkeConfirm}
         visible={isConfirmModal}
         onCancel={handleCancelConfirm}
-        okText="Yes"
-        cancelText="No"
+        okText="Xác nhận"
+        cancelText="Huỷ"
       >
         <Alert
-          message={<p>Are you sure you want to change this option?</p>}
+          message={<p>Bạn có chắc chắn muốn thay đổi tùy chọn này không?</p>}
           type="error"
           showIcon
         />
@@ -252,7 +252,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
       >
         <Col span={24}>
           <Row justify={"center"}>
-            <h1>Loadingg...</h1>
+            <h1>Vui lòng chờ...</h1>
           </Row>
           <Row justify={"center"}>
             <Spin />
@@ -263,7 +263,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
       {/* Modal delete */}
 
       <Modal
-        title="Delete violation"
+        title="Xoá vi phạm"
         open={isModalDeleteViolation}
         onOk={handlOkDeleteViolation}
         onCancel={handleCancelDeleteViolation}
@@ -271,7 +271,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
         <Alert
           message={
             <p>
-              Are you sure you want to delete this violation image in "
+             Bạn có chắc chắn muốn xóa hình ảnh vi phạm: "
               <b>{dataUseSetViolation?.location}"</b> ?
             </p>
           }

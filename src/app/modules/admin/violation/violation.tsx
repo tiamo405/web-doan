@@ -30,14 +30,14 @@ export const ViolationList = () => {
         <Col span={24} xxl={24} xl={24}>
           <Row justify={"space-between"}>
             <Col>
-              <span className="titleMainDashboard">VIOLATIONS LIST</span>{" "}
+              <span className="titleMainDashboard">DANH SÁCH VI PHẠM</span>{" "}
             </Col>
             <Col>
               <Row gutter={[10, 0]}>
                 <Col>
                   <Select
                     style={{ width: 120 }}
-                    placeholder="Select Status"
+                    placeholder="Chọn trạng thái"
                     defaultValue={isViolationStatus}
                     onChange={handleSetIsViolation}
                     options={[
@@ -49,10 +49,10 @@ export const ViolationList = () => {
                 <Col>
                   <Select
                     style={{ width: 150 }}
-                    placeholder="Select Camera"
+                    placeholder="Chọn camera"
                     defaultValue=""
                     options={[
-                      { value: "", label: "Select All" },
+                      { value: "", label: "Chọn tất cả" },
                       ...(dataLocation?.entities?.locations ?? []).map(
                         (location: any) => ({
                           value: location,

@@ -39,7 +39,7 @@ const DefaultAdmin = () => {
       {tokenLocal == "true" ? (
         <>
           <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed} >
+            <Sider trigger={null} collapsible collapsed={collapsed} style={{height: "100vh"}}>
               <div
                 style={{
                   display: "flex",
@@ -108,7 +108,7 @@ const DefaultAdmin = () => {
                             style={{ marginTop: "10px" }}
                             onClick={() => handleLogout()}
                           >
-                            Logout
+                            Đăng xuất
                           </Button>
                         </div>
                       }
