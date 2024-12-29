@@ -18,6 +18,7 @@ import {
   useGetCameraHistory,
   useGetVideoViolation,
   useSetViolation,
+  useUpdateCamera,
 } from "./home.loader";
 import "./home.css";
 import { useState } from "react";
@@ -40,12 +41,13 @@ const Home = () => {
   const [isIdImage, setIsIdImage] = useState("");
   const [dataUseSetViolation, setDataSetViolation] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenEditCamera, setIsModalOpenEditCamera] = useState(false);
   const [isModalDeleteCamera, setIsModalDeleteCamera] = useState(false);
   const [isModalChangeStatusCamera, setIsModalChangeStatusCamera] = useState(false);
   const [isCameraSelect, setIsCameraSelect] = useState({} as any);
-  const [showFirstTableVideoViolation, setShowFirstTableVideoViolation] =
-    useState(true);
-    const [valueChangeStatusCamera, setValueChangeStatusCamera] = useState("")
+  const [dataUpdateCamera, setDataUpdateCamera] = useState({} as any);
+  const [showFirstTableVideoViolation, setShowFirstTableVideoViolation] = useState(true);
+  const [valueChangeStatusCamera, setValueChangeStatusCamera] = useState("");
   const { data: dataCamera, isLoading: isLoadingCamera } = useGetCamera({
     page: isPage,
     limit: 10,
@@ -63,16 +65,11 @@ const Home = () => {
       page: isPageVideoViolation,
       limit: 10,
     });
-  const {
-    mutate: mutateChangeStatusCamera,
-    isLoading: isLoadingChangeStatusCamera,
-  } = useChangeStatusCamera();
-  const { mutate: mutateSetViolation, isLoading: isLoadingSetViolation } =
-    useSetViolation();
-  const { mutate: mutateAddCamera, isLoading: isLoadingAddCamera } =
-    useAddCamera();
-  const { mutate: mutateDeleteCamera, isLoading: isLoadingDeleteCamera } =
-    useDeleteCamera();
+  const { mutate: mutateChangeStatusCamera, isLoading: isLoadingChangeStatusCamera} = useChangeStatusCamera();
+  const { mutate: mutateSetViolation, isLoading: isLoadingSetViolation } = useSetViolation();
+  const { mutate: mutateAddCamera, isLoading: isLoadingAddCamera } = useAddCamera();
+  const { mutate: mutateDeleteCamera, isLoading: isLoadingDeleteCamera } = useDeleteCamera();
+  const { mutate: mutateUpdateCamera, isLoading: isLoadingUpdateCamera } = useUpdateCamera();
   dayjs.extend(utc);
   dayjs.extend(timezone);
   const onChangeDate = (date: any) => {
@@ -102,6 +99,7 @@ const Home = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsModalOpenEditCamera(false);
     setIsModalDeleteCamera(false);
     setIsModalChangeStatusCamera(false);
   };
@@ -111,9 +109,28 @@ const Home = () => {
     setIsModalDeleteCamera(false);
   };
   const handleChangeStatusCamera = () => {
-  setIsModalChangeStatusCamera(false);
-  mutateChangeStatusCamera({ cam_id: isCameraSelect?._id, is_active: valueChangeStatusCamera });
-  }
+    setIsModalChangeStatusCamera(false);
+    mutateChangeStatusCamera({
+      cam_id: isCameraSelect?._id,
+      is_active: valueChangeStatusCamera,
+    });
+  };
+
+  const handleUpdateCamera = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        const formData = new FormData();
+        formData.append("cam_id", dataUpdateCamera?._id),
+          formData.append("location", values?.location || ""),
+          mutateUpdateCamera(formData);
+        form.resetFields();
+        setIsModalOpenEditCamera(false);
+      })
+      .catch((info) => {
+        console.log("Validate Failed:", info);
+      });
+  };
   return (
     <>
       <Row style={{ padding: "20px" }}>
@@ -170,8 +187,13 @@ const Home = () => {
                       setShowFirstTable={setShowFirstTable}
                       setIsModalDeleteCamera={setIsModalDeleteCamera}
                       setIsCameraSelect={setIsCameraSelect}
-                      setIsModalChangeStatusCamera={setIsModalChangeStatusCamera}
+                      setIsModalChangeStatusCamera={
+                        setIsModalChangeStatusCamera
+                      }
                       setValueChangeStatusCamera={setValueChangeStatusCamera}
+                      setDataUpdateCamera={setDataUpdateCamera}
+                      setIsModalOpenEditCamera={setIsModalOpenEditCamera}
+                      form={form}
                     />
                   ) : showFirstTableVideoViolation ? (
                     <ListCameraHistoryTable
@@ -228,7 +250,7 @@ const Home = () => {
             label="Link rtsp"
             rules={[{ required: true, message: "Vui lòng nhập link rtsp" }]}
           >
-            <Input placeholder="Nhập link rtsp"/>
+            <Input placeholder="Nhập link rtsp" />
           </Form.Item>
           <Form.Item
             name="location"
@@ -243,7 +265,12 @@ const Home = () => {
       {/* Modal loading */}
 
       <Modal
-        open={isLoadingAddCamera || isLoadingDeleteCamera || isLoadingChangeStatusCamera}
+        open={
+          isLoadingAddCamera ||
+          isLoadingDeleteCamera ||
+          isLoadingChangeStatusCamera ||
+          isLoadingUpdateCamera
+        }
         footer={false}
         closable={false}
         centered={true}
@@ -292,6 +319,28 @@ const Home = () => {
           type="error"
           showIcon
         />
+      </Modal>
+
+      {/* Modal update camera */}
+      <Modal
+        title="Cập nhật camera"
+        open={isModalOpenEditCamera}
+        onOk={handleUpdateCamera}
+        onCancel={handleCancel}
+        okText="Cập nhật"
+        cancelText="Huỷ"
+      >
+        <Form form={form} layout="vertical">
+          <Form.Item
+            name="location"
+            label="Location"
+            rules={[
+              { required: true, message: "Vui lòng nhập location camera" },
+            ]}
+          >
+            <Input placeholder="Nhập location camera" />
+          </Form.Item>
+        </Form>
       </Modal>
     </>
   );

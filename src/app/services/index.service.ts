@@ -65,3 +65,9 @@ export const changeStatusCamera = async(data:any) => {
   const result = await configAxios.post(url);
   return result.data;
 }
+
+export const editCamera = async(data:any) => {
+  const url = `/prod/api/v1/camera/edit`;
+  const result = await configAxios.put(url, data);
+  return result.data;
+}

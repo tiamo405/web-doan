@@ -1,5 +1,6 @@
 import {
   DeleteOutlined,
+  EditOutlined,
   HistoryOutlined,
 } from "@ant-design/icons";
 import { Col, Image, Pagination, Row, Spin } from "antd";
@@ -17,8 +18,11 @@ interface listCameraProps {
   setShowFirstTable: any;
   setIsModalDeleteCamera: any;
   setIsCameraSelect: any;
-  setIsModalChangeStatusCamera:any;
-  setValueChangeStatusCamera:any
+  setIsModalChangeStatusCamera: any;
+  setValueChangeStatusCamera: any;
+  setDataUpdateCamera: any;
+  setIsModalOpenEditCamera: any;
+  form: any;
 }
 
 interface ReportCameraHistory {
@@ -37,7 +41,10 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
   setIsModalDeleteCamera,
   setIsCameraSelect,
   setIsModalChangeStatusCamera,
-  setValueChangeStatusCamera
+  setValueChangeStatusCamera,
+  setDataUpdateCamera,
+  setIsModalOpenEditCamera,
+  form,
 }) => {
   dayjs.extend(utc);
   dayjs.extend(timezone);
@@ -47,6 +54,14 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
   const handleRtsp = (value: any) => {
     setIsRtsp(value.rtsp_cam);
     setShowFirstTable(false);
+  };
+
+  const handleEditSegment = (value: any) => { console.log(value);
+    setIsModalOpenEditCamera(true);
+    setDataUpdateCamera(value);
+    form.setFieldsValue({
+      location: value?.location,
+    });
   };
   const columCamera: ColumnsType<ReportCameraHistory> = [
     {
@@ -112,9 +127,12 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
             </div>
           </>
         );
-        function handleToggleCamera(event: React.ChangeEvent<HTMLInputElement>, data: any) {
-          const isChecked = event.target.checked;          
-          setValueChangeStatusCamera(isChecked)
+        function handleToggleCamera(
+          event: React.ChangeEvent<HTMLInputElement>,
+          data: any
+        ) {
+          const isChecked = event.target.checked;
+          setValueChangeStatusCamera(isChecked);
           setIsModalChangeStatusCamera(true);
           setIsCameraSelect(data);
         }
@@ -129,6 +147,10 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
             <HistoryOutlined
               className="history-button"
               onClick={() => handleRtsp(data)}
+            />{" "}
+            <EditOutlined
+              className="edit-button"
+              onClick={() => handleEditSegment(data)}
             />
             <DeleteOutlined
               className="delete-button"

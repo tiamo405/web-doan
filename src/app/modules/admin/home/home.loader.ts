@@ -4,6 +4,7 @@ import {
   changeStatusCamera,
   deleteCamera,
   deleteViolation,
+  editCamera,
   getCamera,
   getCameraHistory,
   getVideoViolation,
@@ -128,6 +129,28 @@ export const useDeleteViolation = () => {
       },
       onError: (err: any) => {
         message.error("Xóa camera không thành công!");
+        console.log(
+          "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
+          err
+        );
+      },
+    }
+  );
+};
+
+export const useUpdateCamera = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (data: any) => {
+      return editCamera(data);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(CACHE_KEYS.InforDataCamera);
+        message.success("Cập nhật camera thành công!");
+      },
+      onError: (err: any) => {
+        message.error("Cập nhật camera không thành công!");
         console.log(
           "Đường ta đi có quý nhân phù trợ nên đoạn code này sẽ không được chạy: ",
           err
