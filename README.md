@@ -26,3 +26,8 @@ npm run build
 ```bash
 npx serve -s dist
 ```
+5. **Environment variables to configure the app at runtime**
+
+| Tên biến môi trường      | Giá trị               | Mô tả                               |
+| ------------------------ | --------------------- | ----------------------------------- |
+| VITE_BASE_URL_BACKEND    | http://example/api/v1 | Url API backend                     |
