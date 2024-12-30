@@ -81,7 +81,7 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
       align: "center" as "center",
       dataIndex: "location",
     },
-    ...(localStorage.getItem("role") === "admin"
+    ...(localStorage.getItem("role") === "adminheheheh"
       ? [
           {
             title: "Chức năng",
