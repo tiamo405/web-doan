@@ -313,7 +313,7 @@ const Home = () => {
         open={isModalChangeStatusCamera}
         onOk={handleChangeStatusCamera}
         onCancel={handleCancel}
-        okText="Thêm"
+        okText="Xác nhận"
         cancelText="Huỷ"
       >
         <Alert
