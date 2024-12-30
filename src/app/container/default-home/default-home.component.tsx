@@ -31,9 +31,9 @@ const DefaultAdmin = () => {
     localStorage.removeItem("phoneNumber");
     localStorage.removeItem("full_name");
     localStorage.removeItem("role_id");
+    localStorage.removeItem("role");
     window.location.href = "/login";
   };
-
   return (
     <>
       {tokenLocal == "true" ? (

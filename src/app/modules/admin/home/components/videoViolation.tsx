@@ -164,23 +164,32 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
     <>
       <Col span={24}>
         <Row justify="end" align="middle" style={{ marginBottom: "20px" }}>
-          <b style={{ fontSize: "17px" }}>Người quản trị xác minh vi phạm: </b>
-          <Switch
-            checkedChildren="True"
-            unCheckedChildren="False"
-            style={{ margin: "10px", marginRight: "30px" }}
-            checked={isViolation}
-            onChange={(checkedClick) => showConfirmModal(checkedClick)}
-          />
-          <Button
-            type="primary"
-            danger
-            icon={<DeleteOutlined />}
-            style={{ marginRight: "30px" }} // Tạo khoảng cách giữa nút Delete và nút Back
-            onClick={handleDeleteViolation}
-          >
-            Xoá
-          </Button>
+          <>
+            {localStorage.getItem("role") === "admin" && (
+              <>
+                <b style={{ fontSize: "17px" }}>
+                  Người quản trị xác minh vi phạm:{" "}
+                </b>
+                <Switch
+                  checkedChildren="True"
+                  unCheckedChildren="False"
+                  style={{ margin: "10px", marginRight: "30px" }}
+                  checked={isViolation}
+                  onChange={(checkedClick) => showConfirmModal(checkedClick)}
+                />
+                <Button
+                  type="primary"
+                  danger
+                  icon={<DeleteOutlined />}
+                  style={{ marginRight: "30px" }} // Tạo khoảng cách giữa nút Delete và nút Back
+                  onClick={handleDeleteViolation}
+                >
+                  Xoá
+                </Button>
+              </>
+            )}
+          </>
+
           <Button
             type="primary"
             icon={<ArrowLeftOutlined />}
@@ -271,7 +280,7 @@ export const ListVideoViolationTable: React.FC<listVideoViolationProps> = ({
         <Alert
           message={
             <p>
-             Bạn có chắc chắn muốn xóa hình ảnh vi phạm: "
+              Bạn có chắc chắn muốn xóa hình ảnh vi phạm: "
               <b>{dataUseSetViolation?.location}"</b> ?
             </p>
           }

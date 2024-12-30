@@ -24,6 +24,7 @@ export const useLogin = () => {
           localStorage.setItem("phoneNumber", data.user.phoneNumber);
           localStorage.setItem("full_name", data.user.full_name);
           localStorage.setItem("role_id", data.user.role_id);
+          localStorage.setItem("role", data.user.role);
         }
         queryClient.invalidateQueries(CACHE_KEYS.InforLogin);
         message.success("Đăng nhập thành công!");

@@ -56,7 +56,8 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
     setShowFirstTable(false);
   };
 
-  const handleEditSegment = (value: any) => { console.log(value);
+  const handleEditSegment = (value: any) => {
+    console.log(value);
     setIsModalOpenEditCamera(true);
     setDataUpdateCamera(value);
     form.setFieldsValue({
@@ -148,14 +149,20 @@ export const ListCameraTable: React.FC<listCameraProps> = ({
               className="history-button"
               onClick={() => handleRtsp(data)}
             />{" "}
-            <EditOutlined
-              className="edit-button"
-              onClick={() => handleEditSegment(data)}
-            />
-            <DeleteOutlined
-              className="delete-button"
-              onClick={() => handleDeteteSegment(data)}
-            />
+            <>
+              {localStorage.getItem("role") === "admin" && (
+                <>
+                  <EditOutlined
+                    className="edit-button"
+                    onClick={() => handleEditSegment(data)}
+                  />
+                  <DeleteOutlined
+                    className="delete-button"
+                    onClick={() => handleDeteteSegment(data)}
+                  />
+                </>
+              )}
+            </>
           </>
         );
         function handleDeteteSegment(data: any) {

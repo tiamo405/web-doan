@@ -36,11 +36,6 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
         return (isPageHistory - 1) * 5 + index + 1;
       },
     },
-    // {
-    //   title: "Camera ID",
-    //   align: "center",
-    //   dataIndex: "camera_id",
-    // },
     {
       title: "Thời gian phát hiện",
       align: "center",
@@ -80,6 +75,10 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
       title: "Vị trí",
       align: "center",
       dataIndex: "location",
+    },
+    {
+      title: "Chức năng",
+      align: "center",
     },
   ];
   //   const handleBack = () => {
