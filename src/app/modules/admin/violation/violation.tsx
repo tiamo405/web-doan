@@ -1,4 +1,4 @@
-import { Col, Row, Select } from "antd";
+import { Col, Modal, Row, Select, Spin } from "antd";
 import { ListViolationTable } from "./components/violationTable";
 import {
   useGetAllListViolation,
@@ -6,6 +6,7 @@ import {
 } from "./violation.loader";
 import { useState } from "react";
 import "./violation.css";
+import { useDeleteViolation } from "../home/home.loader";
 export const ViolationList = () => {
   const [isPageHistory, setIsPageHistory] = useState(1);
   const [isViolationStatus, setIsViolationStatus] = useState(true);
@@ -18,6 +19,8 @@ export const ViolationList = () => {
       limit: 5,
     });
   const { data: dataLocation } = useGetALlLocationCamera();
+  const { mutate: mutateDeleteViolation, isLoading: isLoadingDeleteViolation } =
+    useDeleteViolation();
   const handleSetIsViolation = (value: any) => {
     setIsViolationStatus(value);
   };
@@ -86,6 +89,8 @@ export const ViolationList = () => {
                     setIsPageHistory={setIsPageHistory}
                     isPageHistory={isPageHistory}
                     totalPageHistory={dataListViolation?.entities?.totalPage}
+                    mutateDeleteViolation={mutateDeleteViolation}
+                    isLoadingDeleteViolation={isLoadingDeleteViolation}
                   />
                 </>
               </Row>
@@ -93,6 +98,21 @@ export const ViolationList = () => {
           </Row>
         </Col>
       </Row>
+      <Modal
+        open={isLoadingDeleteViolation}
+        footer={false}
+        closable={false}
+        centered={true}
+      >
+        <Col span={24}>
+          <Row justify={"center"}>
+            <h1>Vui lòng chờ...</h1>
+          </Row>
+          <Row justify={"center"}>
+            <Spin />
+          </Row>
+        </Col>
+      </Modal>
     </>
   );
 };

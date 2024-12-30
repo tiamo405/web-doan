@@ -1,5 +1,6 @@
 // import { ArrowLeftOutlined } from "@ant-design/icons";
-import { Col, Image, Pagination, Row, Spin, Tag } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { Col, Image, Modal, Pagination, Row, Spin, Tag } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
@@ -10,6 +11,8 @@ interface listCameraHistoryProps {
   setIsPageHistory: any;
   totalPageHistory: any;
   isPageHistory: any;
+  mutateDeleteViolation: any;
+  isLoadingDeleteViolation: any;
 }
 
 interface ReportCameraHistory {
@@ -24,6 +27,8 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
   setIsPageHistory,
   totalPageHistory,
   isPageHistory,
+  mutateDeleteViolation,
+  isLoadingDeleteViolation,
   //   rtspUrl,
 }) => {
   dayjs.extend(utc);
@@ -31,14 +36,14 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
   const columCamera: ColumnsType<ReportCameraHistory> = [
     {
       title: "STT",
-      align: "center",
+      align: "center" as "center",
       render: (_value, _record, index) => {
         return (isPageHistory - 1) * 5 + index + 1;
       },
     },
     {
       title: "Thời gian phát hiện",
-      align: "center",
+      align: "center" as "center",
       dataIndex: "detect_timestamp",
       render: (text) => (
         <span>
@@ -51,7 +56,7 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
     },
     {
       title: "Vi phạm",
-      align: "center",
+      align: "center" as "center",
       dataIndex: "is_violation",
       render: (text) => {
         return (
@@ -61,7 +66,7 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
     },
     {
       title: "Hình ảnh",
-      align: "center",
+      align: "center" as "center",
       dataIndex: "url_image",
       render: (text) => (
         <Image
@@ -73,14 +78,33 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
     },
     {
       title: "Vị trí",
-      align: "center",
+      align: "center" as "center",
       dataIndex: "location",
     },
-    {
-      title: "Chức năng",
-      align: "center",
-    },
+    ...(localStorage.getItem("role") === "admin"
+      ? [
+          {
+            title: "Chức năng",
+            align: "center" as "center",
+            render: (_: any, data: any) => {
+              const handleDeleteSegment = (data: any) => {
+                console.log(data);
+                mutateDeleteViolation(data?._id);
+              };
+              return (
+                <>
+                  <DeleteOutlined
+                    className="delete-button"
+                    onClick={() => handleDeleteSegment(data)}
+                  />
+                </>
+              );
+            },
+          },
+        ]
+      : []),
   ];
+
   //   const handleBack = () => {
   //     setShowFirstTable(true);
   //   };
@@ -112,6 +136,22 @@ export const ListViolationTable: React.FC<listCameraHistoryProps> = ({
           />
         </Row>
       </Col>
+
+      <Modal
+        open={isLoadingDeleteViolation}
+        footer={false}
+        closable={false}
+        centered={true}
+      >
+        <Col span={24}>
+          <Row justify={"center"}>
+            <h1>Vui lòng chờ...</h1>
+          </Row>
+          <Row justify={"center"}>
+            <Spin />
+          </Row>
+        </Col>
+      </Modal>
     </>
   );
 };

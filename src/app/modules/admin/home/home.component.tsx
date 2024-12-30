@@ -65,6 +65,8 @@ const Home = () => {
       page: isPageVideoViolation,
       limit: 10,
     });
+    console.log(dataVideoViolation);
+    
   const { mutate: mutateChangeStatusCamera, isLoading: isLoadingChangeStatusCamera} = useChangeStatusCamera();
   const { mutate: mutateSetViolation, isLoading: isLoadingSetViolation } = useSetViolation();
   const { mutate: mutateAddCamera, isLoading: isLoadingAddCamera } = useAddCamera();
