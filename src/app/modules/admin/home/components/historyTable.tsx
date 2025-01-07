@@ -29,7 +29,7 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
   setIsPageHistory,
   totalPageHistory,
   isPageHistory,
-  rtspUrl,
+  // rtspUrl,
   setShowFirstTableVideoViolation,
   setIsIdImage,
   setDataSetViolation,
@@ -111,9 +111,9 @@ export const ListCameraHistoryTable: React.FC<listCameraHistoryProps> = ({
   return (
     <>
       <Col span={24}>
-        <Row justify="center">
+        {/* <Row justify="center">
           <h3>{rtspUrl}</h3>
-        </Row>
+        </Row> */}
         <Row justify="end" style={{ marginBottom: "20px" }}>
           <Button
             type="primary"
